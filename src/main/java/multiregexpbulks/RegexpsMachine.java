@@ -40,6 +40,21 @@ public class RegexpsMachine implements Serializable {
         return matchedValue;
     }
 
+    @SuppressWarnings("unused")
+    public int runURLOnMultiPatternsEager(String urlLine) {
+        int[] matching;
+        int matchedValue;
+        int bulksCounter = 0;
+        for (MultiPattern bulk : multiPatterns) {
+            matching = bulk.match(urlLine);
+            if (matching.length > 0) {
+                return bulksCounter * MAX_REGEXPS_IN_MULTI_PATTERN + matching[0];
+            }
+            bulksCounter++;
+        }
+        return Integer.MAX_VALUE;
+    }
+
     public Collection<Integer> runURLOnMultiPatternsAndGetAllMatches(String urlLine) {
         int[] matching;
         Set<Integer> allMatches = new HashSet<Integer>();
