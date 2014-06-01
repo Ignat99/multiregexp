@@ -45,7 +45,7 @@ public class RegexpsMachineHelper<V> implements Serializable {
         regexpsMachine.constructMultiPattern(regexps);
     }
 
-    public V getCategoryForURL(String url) {
+    public V getValueForURL(String url) {
         int runURLOnMultiPatterns = regexpsMachine.runURLOnMultiPatterns(url);
         return runURLOnMultiPatterns == Integer.MAX_VALUE ? null : indexedValuesArray[runURLOnMultiPatterns];
     }

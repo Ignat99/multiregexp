@@ -67,7 +67,7 @@ public class RegexpsMachineTest {
         boolean passed = true;
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String expected = entry.getValue();
-            String actual = regexpsMachineHelper.getCategoryForURL(entry.getKey());
+            String actual = regexpsMachineHelper.getValueForURL(entry.getKey());
             String url = entry.getKey();
 
             if (!expected.equals(actual)) {
@@ -99,7 +99,7 @@ public class RegexpsMachineTest {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                regexpsMachineHelper.getCategoryForURL(entry.getKey());
+                regexpsMachineHelper.getValueForURL(entry.getKey());
             }
         }
         System.out.println(System.currentTimeMillis() - start);
