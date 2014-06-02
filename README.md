@@ -14,15 +14,10 @@ and start using it only when ready:
 
 '''
 AtomicReference<RegexpsMachineHelper<String>> regexpsMachineHelper;
-
 regexpsMachineHelper = new AtomicReference<RegexpsMachineHelper<String>>();
-
 regexpsMachineHelper.set(new RegexpsMachineHelper<String>());
-
 regexpsMachineHelper.get().constructAutomatonMapping();
-
 return regexpsMachineHelper.get();
-
 '''
 
 
