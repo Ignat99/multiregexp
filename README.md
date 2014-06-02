@@ -12,7 +12,7 @@ under high load. you may consider using atomic reference for when you need to re
 and start using it only when ready:
 
 
-#
+'''
 AtomicReference<RegexpsMachineHelper<String>> regexpsMachineHelper;
 
 regexpsMachineHelper = new AtomicReference<RegexpsMachineHelper<String>>();
@@ -23,7 +23,7 @@ regexpsMachineHelper.get().constructAutomatonMapping();
 
 return regexpsMachineHelper.get();
 
-##
+'''
 
 
 credits to:
