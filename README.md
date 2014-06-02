@@ -13,19 +13,19 @@ and start using it only when ready:
 
 <p>
 <code>
-AtomicReference<RegexpsMachineHelper<String>> regexpsMachineHelper;
+AtomicReference\<RegexpsMachineHelper\<String\>\> regexpsMachineHelper;
 </code>
 </p>
 
 <p>
 <code>
-regexpsMachineHelper = new AtomicReference<RegexpsMachineHelper<String>>();
+regexpsMachineHelper = new AtomicReference\<RegexpsMachineHelper\<String\>\>();
 </code>
 </p>
 
 <p>
 <code>
-regexpsMachineHelper.set(new RegexpsMachineHelper<String>());
+regexpsMachineHelper.set(new RegexpsMachineHelper\<String\>());
 </code>
 </p>
 
