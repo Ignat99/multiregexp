@@ -13,34 +13,33 @@ and start using it only when ready:
 
 <p>
 <code>
-AtomicReference\<RegexpsMachineHelper\<String\>\> regexpsMachineHelper;
+AtomicReference%3CRegexpsMachineHelper%3CString%3E%3E%20regexpsMachineHelper%3B
 </code>
 </p>
 
 <p>
 <code>
-regexpsMachineHelper = new AtomicReference\<RegexpsMachineHelper\<String\>\>();
+regexpsMachineHelper%20%3D%20new%20AtomicReference%3CRegexpsMachineHelper%3CString%3E%3E()%3B
 </code>
 </p>
 
 <p>
 <code>
-regexpsMachineHelper.set(new RegexpsMachineHelper\<String\>());
+regexpsMachineHelper.set(new%20RegexpsMachineHelper%3CString%3E())%3B
 </code>
 </p>
 
 <p>
 <code>
-regexpsMachineHelper.get().constructAutomatonMapping();
+regexpsMachineHelper.get().constructAutomatonMapping()%3B
 </code>
 </p>
 
 <p>
 <code>
-return regexpsMachineHelper.get();
+return%20regexpsMachineHelper.get()%3B
 </code>
 </p>
-
 
 credits to:
 
