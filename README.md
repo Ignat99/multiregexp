@@ -13,13 +13,18 @@ and start using it only when ready:
 
 <code>
 AtomicReference\<RegexpsMachineHelper\<String\>\> regexpsMachineHelper;
+</code>
 
+<code>
 regexpsMachineHelper = new AtomicReference\<RegexpsMachineHelper\<String\>\>();
-
+</code>
+<code>
 regexpsMachineHelper.set(new RegexpsMachineHelper\<String\>());
-
+</code>
+<code>
 regexpsMachineHelper.get().constructAutomatonMapping();
-
+</code>
+<code>
 return regexpsMachineHelper.get();
 </code>
 
