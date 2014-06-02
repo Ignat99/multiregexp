@@ -16,18 +16,18 @@ public class RegexpsMachine implements Serializable {
     private Set<MultiPattern> multiPatterns = new LinkedHashSet<MultiPattern>();
     private Map<Integer, Integer> lengthMap = new HashMap<Integer, Integer>();
 
-    public void constructMultiPattern(String... regexps) {
+    protected void constructMultiPattern(String... regexps) {
         List<String> regexpsBulks = createRegexpsBulks(regexps);
         constructMultiPatternsArray(regexpsBulks.toArray(new String[regexpsBulks.size()]));
     }
 
-    public int runURLOnMultiPatterns(String urlLine) {
+    protected int runQueryOnMultiPatterns(String query) {
         int[] matching;
         int matchedValue = Integer.MAX_VALUE;
         int prevMatchedValue;
         int bulksCounter = 0;
         for (MultiPattern bulk : multiPatterns) {
-            matching = bulk.match(urlLine);
+            matching = bulk.match(query);
             for (int aMatching : matching) {
                 prevMatchedValue = matchedValue;
                 matchedValue = bulksCounter * MAX_REGEXPS_IN_MULTI_PATTERN + aMatching;
@@ -41,12 +41,12 @@ public class RegexpsMachine implements Serializable {
     }
 
     @SuppressWarnings("unused")
-    public int runURLOnMultiPatternsEager(String urlLine) {
+    protected int runQueryOnMultiPatternsEager(String query) {
         int[] matching;
         int matchedValue;
         int bulksCounter = 0;
         for (MultiPattern bulk : multiPatterns) {
-            matching = bulk.match(urlLine);
+            matching = bulk.match(query);
             if (matching.length > 0) {
                 return bulksCounter * MAX_REGEXPS_IN_MULTI_PATTERN + matching[0];
             }
@@ -55,12 +55,12 @@ public class RegexpsMachine implements Serializable {
         return Integer.MAX_VALUE;
     }
 
-    public Collection<Integer> runURLOnMultiPatternsAndGetAllMatches(String urlLine) {
+    protected Collection<Integer> runQueryOnMultiPatternsAndGetAllMatches(String query) {
         int[] matching;
         Set<Integer> allMatches = new HashSet<Integer>();
         int bulksCounter = 0;
         for (MultiPattern bulk : multiPatterns) {
-            matching = bulk.match(urlLine);
+            matching = bulk.match(query);
             for (int aMatching : matching) {
                 allMatches.add(bulksCounter * MAX_REGEXPS_IN_MULTI_PATTERN + aMatching);
             }
@@ -70,7 +70,7 @@ public class RegexpsMachine implements Serializable {
     }
 
     @SuppressWarnings("unused")
-    public void setMaxRegexpsInBulk(int size) throws OperationNotSupportedException {
+    protected void setMaxRegexpsInBulk(int size) throws OperationNotSupportedException {
         if (!multiPatterns.isEmpty()) {
             throw new OperationNotSupportedException(ERROR1);
         }

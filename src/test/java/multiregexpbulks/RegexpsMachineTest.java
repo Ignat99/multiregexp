@@ -104,4 +104,18 @@ public class RegexpsMachineTest {
         }
         System.out.println(System.currentTimeMillis() - start);
     }
+
+    @Test
+    public void test4() {
+        RegexpsMachineHelper<String> regexpsMachineHelper = readFileAndConstructRegexpsMachineHelper("src\\test\\java\\multiregexpbulks\\RegExps.txt");
+        Map<String, String> map = readTestSetFromFile("src\\test\\java\\multiregexpbulks\\TestSet.txt");
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String expected = entry.getValue();
+            String actual = regexpsMachineHelper.getValueForURLEager(entry.getKey());
+            String url = entry.getKey();
+            System.out.println("Category for " + url + " is " + actual);
+            System.out.println("Expected " + expected);
+        }
+    }
+
 }
