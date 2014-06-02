@@ -11,23 +11,17 @@ In case you use the same regexpMachine with multiple threads all working on the 
 under high load. you may consider using atomic reference for when you need to reconstruct the machine
 and start using it only when ready:
 
-<code>
-'
-AtomicReference<RegexpsMachineHelper<String>> regexpsMachineHelper;
 
-regexpsMachineHelper = new AtomicReference<RegexpsMachineHelper<String>>();
 
-regexpsMachineHelper.set(new RegexpsMachineHelper<String>());
+'AtomicReference<RegexpsMachineHelper<String>> regexpsMachineHelper;'
 
-...
-...
+'regexpsMachineHelper = new AtomicReference<RegexpsMachineHelper<String>>();'
 
-regexpsMachineHelper.get().constructAutomatonMapping();
+'regexpsMachineHelper.set(new RegexpsMachineHelper<String>());'
 
-return regexpsMachineHelper.get();
-'
+'regexpsMachineHelper.get().constructAutomatonMapping();'
 
-</code>
+'return regexpsMachineHelper.get();'
 
 credits to:
 
