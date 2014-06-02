@@ -12,20 +12,11 @@ under high load. you may consider using atomic reference for when you need to re
 and start using it only when ready:
 
 <code>
-AtomicReference\<RegexpsMachineHelper\<String\>\> regexpsMachineHelper;
-</code>
-
-<code>
-regexpsMachineHelper = new AtomicReference\<RegexpsMachineHelper\<String\>\>();
-</code>
-<code>
-regexpsMachineHelper.set(new RegexpsMachineHelper\<String\>());
-</code>
-<code>
-regexpsMachineHelper.get().constructAutomatonMapping();
-</code>
-<code>
-return regexpsMachineHelper.get();
+AtomicReference\<RegexpsMachineHelper\<String\>\> regexpsMachineHelper;</p>
+regexpsMachineHelper = new AtomicReference\<RegexpsMachineHelper\<String\>\>();</p>
+regexpsMachineHelper.set(new RegexpsMachineHelper\<String\>());</p>
+regexpsMachineHelper.get().constructAutomatonMapping();</p>
+return regexpsMachineHelper.get();</p>
 </code>
 
 
