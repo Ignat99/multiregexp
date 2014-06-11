@@ -1,9 +1,16 @@
 package multiregexpbulks;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
+
 
 /**
  * Interface class for using the regexpsMachine class.
@@ -13,15 +20,17 @@ import java.util.Map.Entry;
 public class RegexpsMachineHelper<V> implements Serializable {
 
     private static final long serialVersionUID = -7220640852684147030L;
-    private Map<String, V> regexpToValueMapping;
-    private V[] indexedValuesArray = null;
-    private volatile RegexpsMachine regexpsMachine = null;
-
+    private transient Map<String, V> regexpToValueMapping;
+    private ArrayList<V> indexedValuesArray = null;
+    private V[] runTimeIndexedValuesArray = null;
+    private RegexpsMachine regexpsMachine = null;
 
     public RegexpsMachineHelper() {
+
         regexpToValueMapping = new TreeMap<String, V>(new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
+
                 return s1.compareTo(s2);
             }
         });
@@ -38,6 +47,7 @@ public class RegexpsMachineHelper<V> implements Serializable {
      * </a>
      */
     public void add(String regexpString, V value) {
+
         regexpToValueMapping.put(regexpString.intern(), value);
     }
 
@@ -45,22 +55,25 @@ public class RegexpsMachineHelper<V> implements Serializable {
      * construct the mapping after you ar done adding regexps.
      */
     public void constructAutomatonMapping() {
+
         if (regexpToValueMapping.isEmpty()) {
             return;
         }
         regexpsMachine = new RegexpsMachine();
         String[] regexps = new String[regexpToValueMapping.size()];
-        //noinspection unchecked
-        indexedValuesArray = GenSet((Class<V>) regexpToValueMapping.values().iterator().next().getClass(), regexpToValueMapping.size());
+        indexedValuesArray = new ArrayList<V>(regexpToValueMapping.size());
         Iterator<Entry<String, V>> itr = regexpToValueMapping.entrySet().iterator();
         int c = 0;
         while (itr.hasNext()) {
             Entry<String, V> nextEntry = itr.next();
             regexps[c] = nextEntry.getKey();
-            indexedValuesArray[c] = nextEntry.getValue();
+            indexedValuesArray.add(c, nextEntry.getValue());
             c++;
         }
         regexpsMachine.constructMultiPattern(regexps);
+        //noinspection unchecked
+        runTimeIndexedValuesArray = (V[]) indexedValuesArray.toArray();
+        indexedValuesArray = null;
     }
 
     /**
@@ -69,8 +82,9 @@ public class RegexpsMachineHelper<V> implements Serializable {
      * length than the last match in lexicographic order is returned.
      */
     public V getValueForURL(String query) {
+
         int runURLOnMultiPatterns = regexpsMachine.runQueryOnMultiPatterns(query);
-        return runURLOnMultiPatterns == Integer.MAX_VALUE ? null : indexedValuesArray[runURLOnMultiPatterns];
+        return runURLOnMultiPatterns == Integer.MAX_VALUE ? null : runTimeIndexedValuesArray[runURLOnMultiPatterns];
     }
 
     /**
@@ -78,8 +92,9 @@ public class RegexpsMachineHelper<V> implements Serializable {
      * @return - First match in lexicographic order.
      */
     public V getValueForURLEager(String query) {
+
         int runURLOnMultiPatterns = regexpsMachine.runQueryOnMultiPatternsEager(query);
-        return runURLOnMultiPatterns == Integer.MAX_VALUE ? null : indexedValuesArray[runURLOnMultiPatterns];
+        return runURLOnMultiPatterns == Integer.MAX_VALUE ? null : runTimeIndexedValuesArray[runURLOnMultiPatterns];
     }
 
     /**
@@ -87,22 +102,18 @@ public class RegexpsMachineHelper<V> implements Serializable {
      * @return - All matches
      */
     public List<V> getAllCategoriesForURL(String query) {
+
         Collection<Integer> arr = regexpsMachine.runQueryOnMultiPatternsAndGetAllMatches(query);
         List<V> list = new LinkedList<V>();
         for (Integer i : arr) {
-            list.add(indexedValuesArray[i]);
+            list.add(runTimeIndexedValuesArray[i]);
         }
         return list;
     }
 
     @SuppressWarnings("unused")
     public int getPatternCount() {
-        return indexedValuesArray != null ? indexedValuesArray.length : 0;
-    }
 
-    public V[] GenSet(Class<V> c, int s) {
-        @SuppressWarnings("unchecked")
-        V[] arr = (V[]) Array.newInstance(c, s);
-        return arr;
+        return indexedValuesArray != null ? indexedValuesArray.size() : 0;
     }
 }
