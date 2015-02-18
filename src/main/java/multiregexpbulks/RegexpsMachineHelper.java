@@ -1,15 +1,8 @@
 package multiregexpbulks;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 
 /**
@@ -112,8 +105,11 @@ public class RegexpsMachineHelper<V> implements Serializable {
     }
 
     @SuppressWarnings("unused")
+    /**
+     * To be used on a constructed machine.
+     */
     public int getPatternCount() {
 
-        return indexedValuesArray != null ? indexedValuesArray.size() : 0;
+        return runTimeIndexedValuesArray != null ? runTimeIndexedValuesArray.length : 0;
     }
 }
