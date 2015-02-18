@@ -14,7 +14,6 @@ public class RegexpsMachineHelper<V> implements Serializable {
 
     private static final long serialVersionUID = -7220640852684147030L;
     private transient Map<String, V> regexpToValueMapping;
-    private ArrayList<V> indexedValuesArray = null;
     private V[] runTimeIndexedValuesArray = null;
     private RegexpsMachine regexpsMachine = null;
 
@@ -54,7 +53,7 @@ public class RegexpsMachineHelper<V> implements Serializable {
         }
         regexpsMachine = new RegexpsMachine();
         String[] regexps = new String[regexpToValueMapping.size()];
-        indexedValuesArray = new ArrayList<V>(regexpToValueMapping.size());
+        ArrayList<V> indexedValuesArray = new ArrayList<V>(regexpToValueMapping.size());
         Iterator<Entry<String, V>> itr = regexpToValueMapping.entrySet().iterator();
         int c = 0;
         while (itr.hasNext()) {
@@ -66,7 +65,6 @@ public class RegexpsMachineHelper<V> implements Serializable {
         regexpsMachine.constructMultiPattern(regexps);
         //noinspection unchecked
         runTimeIndexedValuesArray = (V[]) indexedValuesArray.toArray();
-        indexedValuesArray = null;
     }
 
     /**
