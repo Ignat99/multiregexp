@@ -2,6 +2,8 @@ package multiregexpbulks.finite;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 
 
@@ -22,7 +24,9 @@ public class FiniteAutomaton {
     
     private Result testWord(final FiniteState state, final String word, final Integer index, final Result result) {
 	result.addState(state);
-	
+	result.addObjnum(0);
+	result.addObjmap(state.getName(),0);
+
 	if (index >= word.length()) {
 	    return result;
 	}
@@ -43,10 +47,14 @@ public class FiniteAutomaton {
     protected class Result implements Cloneable {
 	private String word;
 	private List<FiniteState> states;
+	private List<Integer> objnums;
+	private Map<String, Integer> objmaps;
 
 	public Result(final String word) {
 	    this.word = word;
 	    this.states = new LinkedList<FiniteState>();
+	    this.objnums = new LinkedList<Integer>();
+	    this.objmaps = new HashMap<String, Integer>();
 	}
 
 	public Boolean isValid() {
@@ -57,10 +65,48 @@ public class FiniteAutomaton {
 	    this.states.add(state);
 	    return state;
 	}
+
+	public List<Integer> addObjnum(Integer objnum) {
+	    this.objnums.add(objnum);
+	    return objnums;
+	}
+
+	public Map<String, Integer> addObjmap(String name, int objnum) {
+	    this.objmaps.put(name, new Integer(objnum));
+	    return objmaps;
+	}
 	
 	public List<FiniteState> getStates() {
 	    return states;
 	}
+	public List<Integer> getObjnums() {
+	    return objnums;
+	}
+	public Map<String, Integer> getObjmaps() {
+	    return objmaps;
+	}
+
+	public String incNum(int i) {
+	    Integer value = this.objnums.get(i);
+	    value = value + 1;
+	    this.objnums.set(i, value);
+	    return this.objnums.get(i).toString();
+	}
+	public String incObjnum(String name) {
+	    Integer value = this.objmaps.get(name);
+	    value = value + 1;
+	    this.objmaps.put(name, new Integer(value));
+	    return this.objmaps.get(name).toString();
+	}
+
+
+	public String getNum(int i) {
+	    return this.objnums.get(i).toString();
+	}
+	public String getObjnum(String name) {
+	    return this.objmaps.get(name).toString();
+	}
+
 
 	public String getWord() {
 	    return word;
@@ -72,6 +118,10 @@ public class FiniteAutomaton {
 	    for (FiniteState state : states) {
 		result.addState(state);
 	    }
+	    for (Integer objnum : objnums) {
+		result.addObjnum(objnum);
+	    }
+	    result.objmaps = new HashMap<String, Integer>(this.objmaps);
 	    return result;
 	}
 	
@@ -87,7 +137,9 @@ public class FiniteAutomaton {
 		    string.append(" --> ");
 		} else {
 		    string.append(" Total : ");
-		    string.append(states.get(i).incNum(0));
+//		    string.append(states.get(i).incNum(i));
+//		    string.append(this.incNum(i));
+		    string.append(this.incObjnum(states.get(i).getName()));
 		    break;
 		}
 	    }
@@ -99,6 +151,17 @@ public class FiniteAutomaton {
 		    string.append(" Total_End : ");
 //		    string.append(String.valueOf(states.get(word.length()).incNum()));
 //		    string.append(states.get(word.length()).getNum(0));
+//		    string.append(this.getNum(word.length()));
+//		    string.append(this.incNum(word.length()));
+		    string.append(this.incObjnum(states.get(word.length()).getName()));
+		    string.append(" List of int : ");
+	    for (int i = 0; i < word.length(); i++) {
+//		    string.append(this.incNum(i));
+		    string.append(states.get(i).getName());
+		    string.append(" : ");
+		    string.append(this.incObjnum(states.get(i).getName()));
+		    string.append(" : ");
+	    }
 		}
 	    return string.toString();
 	}

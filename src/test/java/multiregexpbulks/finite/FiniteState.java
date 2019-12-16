@@ -1,16 +1,9 @@
 package multiregexpbulks.finite;
 
-
-
 import java.util.LinkedList;
-
 import java.util.List;
 
-
-
 import multiregexpbulks.State;
-
-
 
 public class FiniteState extends State {
 
@@ -18,13 +11,13 @@ public class FiniteState extends State {
     
     private boolean isFinal = false;
     private List<FiniteTransition> transitions;
-    private List<Integer> objnums;
+//    private List<Integer> objnums;
     
     public FiniteState(String name) {
 	super(name);
 	this.transitions = new LinkedList<FiniteTransition>();
-	this.objnums = new LinkedList<Integer>();
-	this.objnums.add(8);
+//	this.objnums = new LinkedList<Integer>();
+//	this.objnums.add(0);
     }
     
     public void setFinal() {
@@ -64,18 +57,20 @@ public class FiniteState extends State {
     }
     
 //    @Override
+/*
     public String getNum(int i) {
 	return this.objnums.get(i).toString();
     }
-
+*/
 //    @Override
+/*
     public String incNum(int i) {
 	Integer value = this.objnums.get(i);
 	value = value + 1;
 	this.objnums.set(i, value);
 	return this.objnums.get(i).toString();
     }
-
+*/
     @Override
     public int hashCode() {
 	final int prime = 31;

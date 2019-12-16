@@ -211,7 +211,7 @@ public class RegexpsMachineTest {
         first = scanner.nextLine();
         String[] states = first.split(",");
 
-        String second = "d,d,h,d,d,d,d";
+        String second = "c,h,d";
         scanner = SetReadLine(second);
         System.out.println("Input list of transition codes. h,d: ");
         second = scanner.nextLine();
