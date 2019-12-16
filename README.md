@@ -1,3 +1,6 @@
+##Some tests and classes are taken from
+
+https://github.com/alexvetter/LibAutomaton
 
 ###General Description
 
