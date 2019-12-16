@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+//import multiregexpbulks.State;
+import multiregexpbulks.finite.FiniteState;
+import multiregexpbulks.finite.FiniteAutomaton;
 
 public class RegexpsMachineTest {
 
@@ -62,12 +65,13 @@ public class RegexpsMachineTest {
         return map;
     }
 
+/*
     @Test
     public void test1() {
 
         RegexpsMachineHelper<String> regexpsMachineHelper = readFileAndConstructRegexpsMachineHelper
-                ("src\\test\\java\\multiregexpbulks\\RegExps.txt");
-        Map<String, String> map = readTestSetFromFile("src\\test\\java\\multiregexpbulks\\TestSet.txt");
+                ("src/test/java/multiregexpbulks/RegExps.txt");
+        Map<String, String> map = readTestSetFromFile("src/test/java/multiregexpbulks/TestSet.txt");
         boolean passed = true;
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String expected = entry.getValue();
@@ -86,8 +90,8 @@ public class RegexpsMachineTest {
     public void test2() {
 
         RegexpsMachineHelper<String> regexpsMachineHelper = readFileAndConstructRegexpsMachineHelper
-                ("src\\test\\java\\multiregexpbulks\\RegExps.txt");
-        Map<String, String> map = readTestSetFromFile("src\\test\\java\\multiregexpbulks\\TestSet.txt");
+                ("src/test/java/multiregexpbulks/RegExps.txt");
+        Map<String, String> map = readTestSetFromFile("src/test/java/multiregexpbulks/TestSet.txt");
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String expected = entry.getValue();
             List<String> actuals = regexpsMachineHelper.getAllCategoriesForURL(entry.getKey());
@@ -101,8 +105,8 @@ public class RegexpsMachineTest {
     public void test3() {
 
         RegexpsMachineHelper<String> regexpsMachineHelper = readFileAndConstructRegexpsMachineHelper
-                ("src\\test\\java\\multiregexpbulks\\RegExps.txt");
-        Map<String, String> map = readTestSetFromFile("src\\test\\java\\multiregexpbulks\\TestSet.txt");
+                ("src/test/java/multiregexpbulks/RegExps.txt");
+        Map<String, String> map = readTestSetFromFile("src/test/java/multiregexpbulks/TestSet.txt");
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -111,13 +115,15 @@ public class RegexpsMachineTest {
         }
         System.out.println(System.currentTimeMillis() - start);
     }
+*/
 
+/*
     @Test
     public void test4() {
 
         RegexpsMachineHelper<String> regexpsMachineHelper = readFileAndConstructRegexpsMachineHelper
-                ("src\\test\\java\\multiregexpbulks\\RegExps.txt");
-        Map<String, String> map = readTestSetFromFile("src\\test\\java\\multiregexpbulks\\TestSet.txt");
+                ("src/test/java/multiregexpbulks/RegExps.txt");
+        Map<String, String> map = readTestSetFromFile("src/test/java/multiregexpbulks/TestSet.txt");
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String expected = entry.getValue();
             String actual = regexpsMachineHelper.getValueForURLEager(entry.getKey());
@@ -128,12 +134,12 @@ public class RegexpsMachineTest {
     }
 
     @Test
-    public void test5() {
+    public void test6() {
 
         try {
             RegexpsMachineHelper<String> regexpsMachineHelper = readFileAndConstructRegexpsMachineHelper
-                    ("src\\test\\java\\multiregexpbulks\\RegExps.txt");
-            FileOutputStream fileOut = new FileOutputStream("src\\test\\java\\multiregexpbulks\\serTest.ser");
+                    ("src/test/java/multiregexpbulks/RegExps.txt");
+            FileOutputStream fileOut = new FileOutputStream("src/test/java/multiregexpbulks/serTest.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(regexpsMachineHelper);
             out.close();
@@ -143,5 +149,55 @@ public class RegexpsMachineTest {
             i.printStackTrace();
         }
     }
+*/
+
+
+    @Test
+    public void test5() {
+
+//        RegexpsMachineHelper<String> regexpsMachineHelper = readFileAndConstructRegexpsMachineHelper
+//                ("src/test/java/multiregexpbulks/RegExps.txt");
+//        Map<String, String> map = readTestSetFromFile("src/test/java/multiregexpbulks/TestSet.txt");
+        long start = System.currentTimeMillis();
+//        for (int i = 0; i < 10000; i++) {
+//            for (Map.Entry<String, String> entry : map.entrySet()) {
+//                regexpsMachineHelper.getValueForURL(entry.getKey());
+//            }
+//        }
+        FiniteState s0 = new FiniteState("s0");
+        FiniteState g1 = new FiniteState("g1");
+        FiniteState p2 = new FiniteState("p2");
+        FiniteState x3 = new FiniteState("x3");
+        FiniteState l4 = new FiniteState("l4");
+//        FiniteState r5 = new FiniteState("r5");
+
+        s0.setFinal();
+
+        // this finite automaton is deterministic
+        s0.addTransition(x3, 'c');
+        s0.addTransition(x3, 'h');
+
+        x3.addTransition(s0, 'g');
+
+        g1.addTransition(s0, 'h');
+        g1.addTransition(s0, 'c');
+        g1.addTransition(x3, 'h', 'c');
+
+        p2.addTransition(s0, 'p');
+
+        l4.addTransition(l4, 'd');
+        l4.addTransition(x3, 'h', 'c');
+        l4.addTransition(g1, 'h');
+        l4.addTransition(s0, 'c');
+
+
+        FiniteAutomaton automat = new FiniteAutomaton(l4);
+
+//        assertTrue(automat.testWord("ptvtvvt").isValid());
+
+        System.out.println(System.currentTimeMillis() - start);
+        System.out.println("Test 5 " + automat.testWord("hd"));
+    }
+
 
 }
