@@ -203,15 +203,15 @@ public class RegexpsMachineTest {
         l4.addTransition(g1, 'h');
         l4.addTransition(s0, 'c');
 
-        FiniteAutomaton automat = new FiniteAutomaton(l4);
+        FiniteAutomaton automat=null; // = new FiniteAutomaton(l4);
 
-        String first = "L,G,G";
+        String first = "L,L,G,G";
         Scanner scanner = SetReadLine(first);
         System.out.println("Input list of objects, separated by comma. L,G,G: ");
         first = scanner.nextLine();
         String[] states = first.split(",");
 
-        String second = "h,d";
+        String second = "d,d,h,d,d,d,d";
         scanner = SetReadLine(second);
         System.out.println("Input list of transition codes. h,d: ");
         second = scanner.nextLine();
@@ -226,7 +226,7 @@ public class RegexpsMachineTest {
 
             switch (states[i].charAt(0)) {
                 case 'L':
-//                    FiniteAutomaton automat = new FiniteAutomaton(l4);
+                    automat = new FiniteAutomaton(l4);
                     break;
                 case 'G':
                     automat = new FiniteAutomaton(g1);
