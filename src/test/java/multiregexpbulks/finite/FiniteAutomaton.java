@@ -139,7 +139,7 @@ public class FiniteAutomaton {
 		    string.append(" Total : ");
 //		    string.append(states.get(i).incNum(i));
 //		    string.append(this.incNum(i));
-		    string.append(this.incObjnum(states.get(i).getName()));
+		    string.append(this.incObjnum(states.get(i-1).getName()));
 		    break;
 		}
 	    }
@@ -153,13 +153,13 @@ public class FiniteAutomaton {
 //		    string.append(states.get(word.length()).getNum(0));
 //		    string.append(this.getNum(word.length()));
 //		    string.append(this.incNum(word.length()));
-		    string.append(this.incObjnum(states.get(word.length()).getName()));
+		    string.append(this.incObjnum(states.get(word.length()-1).getName()));
 		    string.append(" List of int : ");
 	    for (int i = 0; i < word.length(); i++) {
 //		    string.append(this.incNum(i));
 		    string.append(states.get(i).getName());
 		    string.append(" : ");
-		    string.append(this.incObjnum(states.get(i).getName()));
+		    string.append(this.getObjnum(states.get(i).getName()));
 		    string.append(" : ");
 	    }
 		}
