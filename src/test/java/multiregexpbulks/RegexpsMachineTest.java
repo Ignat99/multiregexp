@@ -9,10 +9,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.Scanner;
 
 //import multiregexpbulks.State;
 import multiregexpbulks.finite.FiniteState;
@@ -64,6 +68,17 @@ public class RegexpsMachineTest {
         }
         return map;
     }
+
+    private static Scanner SetReadLine(String first) {
+//        String first = "L,G,G";
+        InputStream stdin = System.in;
+        InputStream inst = new ByteArrayInputStream(first.getBytes());
+        System.setIn(inst);
+        Scanner scanner = new Scanner(System.in);
+        System.setIn(stdin);
+        return scanner;
+    }
+
 
 /*
     @Test
@@ -192,11 +207,25 @@ public class RegexpsMachineTest {
 
 
         FiniteAutomaton automat = new FiniteAutomaton(l4);
-
 //        assertTrue(automat.testWord("ptvtvvt").isValid());
 
+        String first = "L,G,G";
+        Scanner scanner = SetReadLine(first);
+        System.out.println("Input list of objects, separated by comma. L,G,G: ");
+        first = scanner.nextLine();
+
+        String second = "h,d";
+        scanner = SetReadLine(second);
+        System.out.println("Input list of transition codes. h,d: ");
+        second = scanner.nextLine();
+
+        System.out.println(first);
+        System.out.println(second);
+
+
+        System.out.println("Test 5 " + automat.testWord("hdhdhdhd"));
+
         System.out.println(System.currentTimeMillis() - start);
-        System.out.println("Test 5 " + automat.testWord("hd"));
     }
 
 
