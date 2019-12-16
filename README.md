@@ -2,6 +2,14 @@
 
 https://github.com/alexvetter/LibAutomaton
 
+To run the tests, use:
+
+mvn test
+
+For install maven on Linux Ubuntu use:
+
+apt install maven
+
 ###General Description
 
 Memory and runtime optimized regexp bulks for hundreds of patterns using multiregexp and brics automaton.
