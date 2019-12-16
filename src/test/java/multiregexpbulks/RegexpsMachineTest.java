@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.Scanner;
 
-//import multiregexpbulks.State;
 import multiregexpbulks.finite.FiniteState;
 import multiregexpbulks.finite.FiniteAutomaton;
 
@@ -70,7 +69,6 @@ public class RegexpsMachineTest {
     }
 
     private static Scanner SetReadLine(String first) {
-//        String first = "L,G,G";
         InputStream stdin = System.in;
         InputStream inst = new ByteArrayInputStream(first.getBytes());
         System.setIn(inst);
@@ -205,28 +203,48 @@ public class RegexpsMachineTest {
         l4.addTransition(g1, 'h');
         l4.addTransition(s0, 'c');
 
-
         FiniteAutomaton automat = new FiniteAutomaton(l4);
-//        assertTrue(automat.testWord("ptvtvvt").isValid());
 
         String first = "L,G,G";
         Scanner scanner = SetReadLine(first);
         System.out.println("Input list of objects, separated by comma. L,G,G: ");
         first = scanner.nextLine();
+        String[] states = first.split(",");
 
         String second = "h,d";
         scanner = SetReadLine(second);
         System.out.println("Input list of transition codes. h,d: ");
         second = scanner.nextLine();
+        String[] transitions = second.split(",");
+        second = String.join("", transitions);
 
-        System.out.println(first);
-        System.out.println(second);
 
+        for (int i = 0; i < states.length; i++) {
 
-        System.out.println("Test 5 " + automat.testWord("hdhdhdhd"));
+            System.out.println(states[i]);
+            System.out.println(second);
+
+            switch (states[i].charAt(0)) {
+                case 'L':
+//                    FiniteAutomaton automat = new FiniteAutomaton(l4);
+                    break;
+                case 'G':
+                    automat = new FiniteAutomaton(g1);
+                    break;
+                case 'S':
+                    automat = new FiniteAutomaton(s0);
+                    break;
+                case 'P':
+                    automat = new FiniteAutomaton(p2);
+                    break;
+                case 'X':
+                    automat = new FiniteAutomaton(x3);
+                    break;
+            }
+            System.out.println("Test 5 " + automat.testWord(second));
+        }
 
         System.out.println(System.currentTimeMillis() - start);
     }
-
 
 }
